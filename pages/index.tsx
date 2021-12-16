@@ -1,22 +1,15 @@
-import { FC, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Box, Heading } from "@chakra-ui/layout";
 
 import { testDataSelector } from "../store/selectors/selector";
-import { testActions } from "../store/slices/slice";
-import { Button } from "@chakra-ui/button";
 import SearchBar from "../components/SearchBar";
 import { Picture } from "../styles/SpinPicture.style";
 
 const Home: FC = () => {
   const data = useSelector(testDataSelector);
-  const dispatch = useDispatch();
 
   console.log(data);
-
-  const dataFetchHandler = useCallback(() => {
-    dispatch(testActions.fetch());
-  }, [dispatch]);
 
   return (
     <>
@@ -30,10 +23,9 @@ const Home: FC = () => {
         <Heading as="h1" size="2xl">
           Welcome Covid Stat v1
         </Heading>
-        <SearchBar />
-        <Button mt={10} size={"lg"} onClick={dataFetchHandler}>
-          Load covid stats!
-        </Button>
+        <Box mt="10">
+          <SearchBar />
+        </Box>
         {data.length !== 0 ? (
           <Heading m={10} as="h3" size="xl">
             Data fetched! Check It in the console!
