@@ -8,3 +8,7 @@ export const testDataSelector = createSelector(
         testSelector,
         (state) => state.data
         )
+
+export const countryIdSelector = createSelector(
+        testSelector,(state) => state.countryId
+        )
