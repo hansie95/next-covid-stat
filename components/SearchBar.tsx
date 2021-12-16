@@ -23,7 +23,7 @@ const SearchBar = () => {
 
   return (
     <Box w="30%" m="auto">
-      <Tooltip label="IT, DE or Italy, Deutschland" placement="top">
+      <Tooltip label="Italy, Slovakia, Hungary etc..." placement="top">
         <Input
           placeholder="Country abbreviation or full country name"
           onChange={countryIdChangeHandler}
