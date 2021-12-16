@@ -4,7 +4,11 @@ export const testSelector = (state: any) =>{
     return state.test;
 }
 
-export const testNameSelector = createSelector(
-    testSelector,
-    (state) => state.name
-    )
+export const testDataSelector = createSelector(
+        testSelector,
+        (state) => state.data
+        )
+
+export const countryIdSelector = createSelector(
+        testSelector,(state) => state.countryId
+        )

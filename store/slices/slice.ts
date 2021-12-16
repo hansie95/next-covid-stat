@@ -1,26 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type TestState = {
-    num: number;
-    name: string;
+    data: any;
+    countryId: string;
 }
 
 export const initialState: TestState = {
-    num: 0,
-    name: ''}
+    data: [],
+    countryId:''
+}
 
 const test = createSlice({
     name: 'test',
     initialState,
     reducers:{
-        incrementNumber(state){
-            state.num = state.num++
+        AddCovidData(state, {payload}: PayloadAction<any>){
+            state.data = payload.covidData;
         },
-        decrementNumber(state){
-            state.num = state.num--
+        AddCountryId(state, {payload}: PayloadAction<string>){
+            state.countryId = payload;
         },
-        changeName(state, {payload}: PayloadAction<string>){
-            state.name = payload;
+        fetch(state){
+            return state;
         }
     }
 })
