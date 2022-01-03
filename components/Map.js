@@ -1,49 +1,27 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { Box } from "@chakra-ui/layout";
 import {
   ComposableMap,
   Geographies,
   Geography,
   Marker,
 } from "react-simple-maps";
-import {
-  longLatSelector,
-  testData2Selector,
-} from "../store/selectors/selector";
-
-/* Eurpe:
-rotate: [-10.0, -52.0, 0],
-        scale:1200
-        
-South-America:
- rotate: [58, 20, 0],
-        scale: 400,
-
-
-Hungary:
- rotate: [-20.0, -48.0, 0],
-        scale: 1500
-*/
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const MapChart = () => {
-  const data2 = useSelector(testData2Selector);
-
+const MapChart = ({ countryData }) => {
   const markers = [
     {
       markerOffset: -30,
-      name: "Where the magic happens",
-      coordinates: [14, 47],
+      name: countryData[0]?.country,
+      coordinates: [countryData[0]?.longitude, countryData[0]?.latitude],
     },
   ];
 
-  if (data2.length !== 0) {
-    markers.coordinates = [data2[0].longitude, data2[0].latitude];
+  if (countryData.length === 0) {
+    return <Box></Box>;
   }
-
-  console.log(markers);
 
   return (
     <ComposableMap
@@ -62,7 +40,7 @@ const MapChart = () => {
                 key={geo.rsmKey}
                 geography={geo}
                 fill="#EAEAEC"
-                stroke="#D6D6DA"
+                stroke="#6998AB"
               />
             ))
         }
