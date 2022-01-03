@@ -1,0 +1,12 @@
+Eurpe:
+rotate: [-10.0, -52.0, 0],
+        scale:1200
+        
+South-America:
+ rotate: [58, 20, 0],
+        scale: 400,
+
+
+Hungary:
+ rotate: [-20.0, -48.0, 0],
+        scale: 1500
