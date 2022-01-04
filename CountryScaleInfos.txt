@@ -1,12 +1,19 @@
 Eurpe:
-rotate: [-10.0, -52.0, 0],
-        scale:1200
+    rotate: [-10.0, -52.0, 0],
+            scale:1200
         
-South-America:
- rotate: [58, 20, 0],
-        scale: 400,
+South-America:(Americas)
+    rotate: [58, 20, 0],
+            scale: 400,
 
+America:(Americas)
+    rotate: [100, -50, 10],
+            scale: 400
 
-Hungary:
- rotate: [-20.0, -48.0, 0],
-        scale: 1500
+Africa: (Africa)
+    rotate: [-20, 0, 0],
+            scale: 400
+
+Asia:(Asia)
+    rotate: [-90, -30, 0],
+            scale: 400
