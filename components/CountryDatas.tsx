@@ -1,4 +1,4 @@
-import { Flex, Box, Heading } from "@chakra-ui/layout";
+import { Flex, Grid, Box, Heading, Center } from "@chakra-ui/layout";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -32,10 +32,10 @@ const CountryDatas = () => {
 
   if (data.length !== 0) {
     return (
-      <Flex>
-        <Box mx="30px" w="50%" boxShadow="dark-lg" rounded="md" bg="white">
+      <Flex wrap="wrap-reverse">
+        <Center mx="auto" w="700px" boxShadow="dark-lg" rounded="md" bg="white">
           <MapChart countryData={data2} />
-        </Box>
+        </Center>
         <StatisticCard />
       </Flex>
     );
