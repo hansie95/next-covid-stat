@@ -23,10 +23,10 @@ const Home: FC = () => {
           width="100px"
           height="100px"
         />
-        <Heading mt="15px" as="h1" size="2xl">
+        <Heading mt="20px" size="xl">
           Welcome Covid Stat v1
         </Heading>
-        <Box my="10">
+        <Box mt="10px" mb="30px">
           <SearchBar />
           <Button mt={2} size={"lg"} onClick={dataFetchHandler}>
             Load covid stats!
