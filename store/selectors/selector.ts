@@ -23,3 +23,13 @@ export const testData2Selector = createSelector(
   testSelector,
   (state) => state.data2
 );
+
+export const regionSelector = createSelector(
+  testSelector,
+  (state) => state.region
+);
+
+export const viewtSelector = createSelector(
+  testSelector,
+  (state) => state.view
+);
