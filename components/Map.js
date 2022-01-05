@@ -6,35 +6,37 @@ import {
   Geography,
   Marker,
 } from "react-simple-maps";
+import { useSelector } from "react-redux";
+import { regionSelector, viewtSelector } from "../store/selectors/selector";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const MapChart = ({ countryData }) => {
+const MapChart = ({ longitudeAndLatitude }) => {
+  const region = useSelector(regionSelector);
+  const view = useSelector(viewtSelector);
+
   const markers = [
     {
       markerOffset: -30,
-      name: countryData[0]?.country,
-      coordinates: [countryData[0]?.longitude, countryData[0]?.latitude],
+      name: longitudeAndLatitude[0]?.country,
+      coordinates: [
+        longitudeAndLatitude[0]?.longitude,
+        longitudeAndLatitude[0]?.latitude,
+      ],
     },
   ];
 
-  if (countryData.length === 0) {
+  if (longitudeAndLatitude.length === 0) {
     return <Box></Box>;
   }
 
   return (
-    <ComposableMap
-      projection="geoAzimuthalEqualArea"
-      projectionConfig={{
-        rotate: [-10.0, -52.0, 0],
-        scale: 1000,
-      }}
-    >
+    <ComposableMap projection="geoAzimuthalEqualArea" projectionConfig={view}>
       <Geographies geography={geoUrl}>
         {({ geographies }) =>
           geographies
-            .filter((d) => d.properties.REGION_UN === "Europe")
+            .filter((d) => d.properties.REGION_UN === region)
             .map((geo) => (
               <Geography
                 key={geo.rsmKey}
