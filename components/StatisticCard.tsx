@@ -15,7 +15,7 @@ const StatisticCard = () => {
   const deaths = country.response[0].deaths.total;
   const population = country.response[0].population;
   const totalCases = country.response[0].cases.total;
-  const casesRatio = Math.round((totalCases / population) * 100);
+  const casesRatio = parseFloat(((totalCases / population) * 100).toFixed(2));
 
   return (
     <Box mx="auto" mb="40px">
@@ -75,7 +75,7 @@ const StatisticCard = () => {
           <Center mt="40px" w="300px" h="80px" mr="85px">
             <Image src="/population.png" alt="grave" w="70px" />
             <Heading ml="10px" size="lg">
-              Population: {population.toLocaleString("en-US")}
+              Population: {population?.toLocaleString("en-US")}
             </Heading>
           </Center>
         </WrapItem>
