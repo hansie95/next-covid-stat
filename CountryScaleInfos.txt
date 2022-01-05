@@ -6,7 +6,7 @@ South-America:(Americas)
     rotate: [58, 20, 0],
             scale: 400,
 
-America:(Americas)
+North-America:(Americas)
     rotate: [100, -50, 10],
             scale: 400
 
@@ -16,4 +16,8 @@ Africa: (Africa)
 
 Asia:(Asia)
     rotate: [-90, -30, 0],
-            scale: 400
+            scale: 450
+
+Oceania:(Oceania)
+    rotate: [215,25,10],
+        scale: 710
