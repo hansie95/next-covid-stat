@@ -42,6 +42,9 @@ function* handleApiCall() {
         covidData2: data2,
       })
     );
+    yield put(
+      testActions.RegionOptimizer({ continent: data.response[0]?.continent })
+    );
   } catch (err) {
     console.log(err);
   }
