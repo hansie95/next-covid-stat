@@ -1,35 +1,30 @@
 import { createSelector } from "reselect";
 
-export const testSelector = (state: any) => {
-  return state.test;
+export const covidAndCountrySelector = (state: any) => {
+  return state.covidStat;
 };
 
-export const testDataSelector = createSelector(
-  testSelector,
-  (state) => state.data
+export const covidDataSelector = createSelector(
+  covidAndCountrySelector,
+  (state) => state.covidData
 );
 
-export const longLatSelector = createSelector(
-  testSelector,
-  (state) => state.longlat
+export const countryDataSelector = createSelector(
+  covidAndCountrySelector,
+  (state) => state.countryData
 );
 
-export const countryIdSelector = createSelector(
-  testSelector,
-  (state) => state.countryId
-);
-
-export const testData2Selector = createSelector(
-  testSelector,
-  (state) => state.data2
+export const countryNameSelector = createSelector(
+  covidAndCountrySelector,
+  (state) => state.countryName
 );
 
 export const regionSelector = createSelector(
-  testSelector,
+  covidAndCountrySelector,
   (state) => state.region
 );
 
 export const viewtSelector = createSelector(
-  testSelector,
+  covidAndCountrySelector,
   (state) => state.view
 );
