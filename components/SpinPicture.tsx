@@ -1,10 +1,17 @@
 import Image from "next/image";
 import React from "react";
+import styles from "../styles/spinImage.module.css";
 
-const SpinPicture = ({ className, src, height, width }: any) => {
+const SpinPicture = () => {
   return (
-    <div className={className}>
-      <Image src={src} alt="covid bacterium" width={width} height={height} />
+    <div>
+      <Image
+        className={styles.covid_image}
+        src="/covid.png"
+        alt="covid bacterium"
+        width="100px"
+        height="100px"
+      />
     </div>
   );
 };
