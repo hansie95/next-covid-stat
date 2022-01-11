@@ -7,27 +7,34 @@ import {
   Marker,
 } from "react-simple-maps";
 import { useSelector } from "react-redux";
-import { regionSelector, viewtSelector } from "../store/selectors/selector";
+import {
+  countryDataSelector,
+  regionSelector,
+  viewtSelector,
+} from "../store/selectors/selector";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const MapChart = ({ longitudeAndLatitude }) => {
+const MapChart = () => {
   const region = useSelector(regionSelector);
   const view = useSelector(viewtSelector);
+  const coordinates = useSelector(countryDataSelector);
 
   const markers = [
     {
       markerOffset: -30,
-      name: longitudeAndLatitude[0]?.country,
-      coordinates: [
-        longitudeAndLatitude[0]?.longitude,
-        longitudeAndLatitude[0]?.latitude,
-      ],
+      name: coordinates[0]?.display_name,
+      coordinates: [coordinates[0]?.lon, coordinates[0]?.lat],
     },
   ];
 
-  if (longitudeAndLatitude.length === 0) {
+  if (coordinates[0]?.display_name === "Russia") {
+    markers[0].coordinates[0] = 40;
+    markers[0].coordinates[1] = 55;
+  }
+
+  if (coordinates.length === 0) {
     return <Box></Box>;
   }
 
