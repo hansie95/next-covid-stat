@@ -1,5 +1,6 @@
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,7 @@ const AutoComplete = () => {
   const dispatch = useDispatch();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const input = useSelector(countryNameSelector);
+  const router = useRouter();
 
   const dataFetchClickHandler = useCallback(() => {
     dispatch(covidStatActions.fetch());
@@ -47,8 +49,9 @@ const AutoComplete = () => {
       setActiveSuggestionIndex(0);
       setShowSuggestions(false);
       dispatch(covidStatActions.fetch());
+      router.push("/" + filteredSuggestions[activeSuggestionIndex]);
     },
-    [activeSuggestionIndex, dispatch, filteredSuggestions]
+    [activeSuggestionIndex, dispatch, filteredSuggestions, router]
   );
 
   const onKeyDown = useCallback(
@@ -63,6 +66,7 @@ const AutoComplete = () => {
         setActiveSuggestionIndex(0);
         setShowSuggestions(false);
         dispatch(covidStatActions.fetch());
+        router.push("/" + filteredSuggestions[activeSuggestionIndex]);
       } else if (e.keyCode === 38) {
         if (activeSuggestionIndex === 0) {
           return;
@@ -77,7 +81,7 @@ const AutoComplete = () => {
         setActiveSuggestionIndex(activeSuggestionIndex + 1);
       }
     },
-    [activeSuggestionIndex, dispatch, filteredSuggestions]
+    [activeSuggestionIndex, dispatch, filteredSuggestions, router]
   );
 
   const SuggestionsListComponent = () => {
