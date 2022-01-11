@@ -1,0 +1,49 @@
+.no_suggestions {
+  color: #999;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.suggestions {
+  border: 2px solid #3182ce;
+  border-top-width: 0;
+  border-radius: 0px 0px 5px 5px;
+  z-index: 1;
+  background-color: #fff;
+  list-style: none;
+  margin-top: 0;
+  max-height: 143px;
+  overflow-y: auto;
+  padding-left: 0;
+  width: 300px;
+  position: absolute;
+  margin-top: -1.5px;
+}
+
+.suggestions::-webkit-scrollbar {
+  width: 0.2rem;
+  height: 0rem;
+  border-radius: 20px;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+  background-color: #4299e1;
+}
+
+.suggestions li {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.suggestion_active,
+.suggestions li:hover {
+  background: #2b6cb0;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.suggestions li:not(:last-of-type) {
+  border-bottom: 1px solid #999;
+}

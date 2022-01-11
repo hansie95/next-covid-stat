@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { call, put, takeLatest, select } from "redux-saga/effects";
-import { countryIdSelector } from "./selectors/selector";
-import { testActions } from "./slices/slice";
+import { countryNameSelector } from "./selectors/selector";
+import { covidStatActions } from "./slices/slice";
 
 const options: AxiosRequestConfig = {
   method: "GET",
@@ -15,42 +15,51 @@ const options: AxiosRequestConfig = {
 
 const optionsCountryPosition: AxiosRequestConfig = {
   method: "GET",
-  url: "https://covid-19-data.p.rapidapi.com/country",
-  params: { name: "" },
+  url: "https://forward-reverse-geocoding.p.rapidapi.com/v1/search",
+  params: { q: "", "accept-language": "en", polygon_threshold: "0.0" },
   headers: {
-    "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
+    "x-rapidapi-host": "forward-reverse-geocoding.p.rapidapi.com",
     "x-rapidapi-key": "079576c957msh05a475683c15090p1f4ec2jsnae7fbb84f1a1",
   },
 };
 
 const collectDataFromApi = async (country: string) => {
   options.params.country = country;
-  optionsCountryPosition.params.name = country;
-  const { data: data } = await axios.request(options);
-  const { data: data2 } = await axios.request(optionsCountryPosition);
-  return { data, data2 };
+  optionsCountryPosition.params.q = country;
+  const { data: covidApiData } = await axios.request(options);
+  const { data: countryApidata } = await axios.request(optionsCountryPosition);
+  return { covidApiData, countryApidata };
 };
 
 function* handleApiCall() {
   try {
-    const cityId: string = yield select(countryIdSelector);
-    const { data, data2 } = yield call(collectDataFromApi, cityId);
+    const countryName: string = yield select(countryNameSelector);
+    const { covidApiData, countryApidata } = yield call(
+      collectDataFromApi,
+      countryName
+    );
 
-    yield put(testActions.AddCovidData({ covidData: data }));
     yield put(
-      testActions.AddCovidData2({
-        covidData2: data2,
+      covidStatActions.AddCovidData({
+        covidData: covidApiData,
       })
     );
     yield put(
-      testActions.RegionOptimizer({ continent: data.response[0]?.continent })
+      covidStatActions.AddCountryData({
+        countryData: countryApidata,
+      })
+    );
+    yield put(
+      covidStatActions.RegionOptimizer({
+        continent: covidApiData.response[0]?.continent,
+      })
     );
   } catch (err) {
     console.log(err);
   }
 }
 export function* rootSaga() {
-  yield takeLatest(testActions.fetch.type, handleApiCall);
+  yield takeLatest(covidStatActions.fetch.type, handleApiCall);
 }
 
 export default rootSaga;

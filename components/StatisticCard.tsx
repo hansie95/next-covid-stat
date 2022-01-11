@@ -4,14 +4,9 @@ import {
   CircularProgress,
   CircularProgressLabel,
 } from "@chakra-ui/react";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { FC } from "react";
 
-import { testDataSelector } from "../store/selectors/selector";
-
-const StatisticCard = () => {
-  const country = useSelector(testDataSelector);
-
+const StatisticCard: FC<any> = ({ country }) => {
   const deaths = country.response[0].deaths.total;
   const population = country.response[0].population;
   const totalCases = country.response[0].cases.total;
@@ -41,7 +36,7 @@ const StatisticCard = () => {
           <Center mt="30px" w="250px" h="80px">
             <Image src="/grave.png" alt="grave" w="70px" />
             <Heading ml="10px" size="lg">
-              Deaths: {deaths.toLocaleString("en-US")}
+              Deaths: {deaths === null ? 0 : deaths.toLocaleString("en-US")}
             </Heading>
           </Center>
         </WrapItem>
