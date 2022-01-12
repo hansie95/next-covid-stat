@@ -1,7 +1,8 @@
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { countries } from "../countries";
@@ -15,6 +16,13 @@ const AutoComplete = () => {
   const dispatch = useDispatch();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const input = useSelector(countryNameSelector);
+  const router = useRouter();
+  const { query } = useRouter();
+
+  useEffect(() => {
+    dispatch(covidStatActions.AddCountryName(String(query.countries)));
+    dispatch(covidStatActions.fetch());
+  }, [dispatch, query.countries]);
 
   const dataFetchClickHandler = useCallback(() => {
     dispatch(covidStatActions.fetch());
@@ -22,13 +30,13 @@ const AutoComplete = () => {
 
   const onChange = useCallback(
     (e: any) => {
-      const userInput = e.target.value.toLowerCase();
+      const userInput = e.target.value;
 
       const unLinked: any = countries.filter(
         (suggestion) =>
           suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
       );
-      dispatch(covidStatActions.AddCountryName(userInput));
+      dispatch(covidStatActions.AddCountryName(e.target.value));
       setFilteredSuggestions(unLinked);
       setActiveSuggestionIndex(0);
       setShowSuggestions(true);
@@ -36,20 +44,14 @@ const AutoComplete = () => {
     [dispatch]
   );
 
-  const onClick = useCallback(
-    (e: any) => {
-      setFilteredSuggestions([]);
-      dispatch(
-        covidStatActions.AddCountryName(
-          filteredSuggestions[activeSuggestionIndex]
-        )
-      );
-      setActiveSuggestionIndex(0);
-      setShowSuggestions(false);
-      dispatch(covidStatActions.fetch());
-    },
-    [activeSuggestionIndex, dispatch, filteredSuggestions]
-  );
+  const onClick = (e: any) => {
+    setFilteredSuggestions([]);
+    dispatch(covidStatActions.AddCountryName(e.target.innerText));
+    setActiveSuggestionIndex(0);
+    setShowSuggestions(false);
+    dispatch(covidStatActions.fetch());
+    router.push("/" + e.target.innerText);
+  };
 
   const onKeyDown = useCallback(
     (e: any) => {
@@ -59,25 +61,23 @@ const AutoComplete = () => {
             filteredSuggestions[activeSuggestionIndex]
           )
         );
-
         setActiveSuggestionIndex(0);
         setShowSuggestions(false);
         dispatch(covidStatActions.fetch());
+        router.push("/" + filteredSuggestions[activeSuggestionIndex]);
       } else if (e.keyCode === 38) {
         if (activeSuggestionIndex === 0) {
           return;
         }
-
         setActiveSuggestionIndex(activeSuggestionIndex - 1);
       } else if (e.keyCode === 40) {
         if (activeSuggestionIndex - 1 === filteredSuggestions.length) {
           return;
         }
-
         setActiveSuggestionIndex(activeSuggestionIndex + 1);
       }
     },
-    [activeSuggestionIndex, dispatch, filteredSuggestions]
+    [activeSuggestionIndex, dispatch, filteredSuggestions, router]
   );
 
   const SuggestionsListComponent = () => {
