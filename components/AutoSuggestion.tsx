@@ -79,7 +79,6 @@ const AutoComplete = () => {
     },
     [activeSuggestionIndex, dispatch, filteredSuggestions, router]
   );
-  console.log(input);
 
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
