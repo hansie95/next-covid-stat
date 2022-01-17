@@ -1,7 +1,6 @@
 import { Input } from "@chakra-ui/input";
-import { Button } from "@chakra-ui/react";
+import { Box, useColorMode, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,23 +9,30 @@ import { countryNameSelector } from "../store/selectors/selector";
 import { covidStatActions } from "../store/slices/slice";
 import styles from "../styles/suggestion.module.css";
 
-const AutoComplete = () => {
+const AutoSuggestion = () => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  const dispatch = useDispatch();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const input = useSelector(countryNameSelector);
+  const dispatch = useDispatch();
   const router = useRouter();
-  const { query } = useRouter();
+  const toast = useToast();
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
-    dispatch(covidStatActions.AddCountryName(String(query.countries)));
-    dispatch(covidStatActions.fetch());
-  }, [dispatch, query.countries]);
-
-  const dataFetchClickHandler = useCallback(() => {
-    dispatch(covidStatActions.fetch());
-  }, [dispatch]);
+    countries.map((country) => {
+      if (
+        country.toLowerCase() === String(router.query.countries).toLowerCase()
+      ) {
+        dispatch(
+          covidStatActions.AddCountryName(String(router.query.countries))
+        );
+        dispatch(covidStatActions.fetch());
+      } else {
+        dispatch(covidStatActions.AddCountryName(""));
+      }
+    });
+  }, [dispatch, router.query.countries]);
 
   const onChange = useCallback(
     (e: any) => {
@@ -45,17 +51,27 @@ const AutoComplete = () => {
   );
 
   const onClick = (e: any) => {
+    if (e.target.innerText === undefined) {
+      dispatch(covidStatActions.AddCountryName(""));
+      router.push("/" + "");
+    }
     setFilteredSuggestions([]);
     dispatch(covidStatActions.AddCountryName(e.target.innerText));
     setActiveSuggestionIndex(0);
     setShowSuggestions(false);
     dispatch(covidStatActions.fetch());
     router.push("/" + e.target.innerText);
+    console.log(e.target.innerText);
   };
 
   const onKeyDown = useCallback(
     (e: any) => {
-      if (e.keyCode === 13) {
+      if (
+        e.keyCode === 13 &&
+        filteredSuggestions[activeSuggestionIndex] !== undefined
+      ) {
+        dispatch(covidStatActions.ClearCountryName());
+        setFilteredSuggestions([]);
         dispatch(
           covidStatActions.AddCountryName(
             filteredSuggestions[activeSuggestionIndex]
@@ -65,6 +81,31 @@ const AutoComplete = () => {
         setShowSuggestions(false);
         dispatch(covidStatActions.fetch());
         router.push("/" + filteredSuggestions[activeSuggestionIndex]);
+        console.log(e.target.value);
+      } else if (
+        e.keyCode === 13 &&
+        filteredSuggestions[activeSuggestionIndex] === undefined &&
+        e.target.value !== ""
+      ) {
+        toast({
+          title: "Wrong ountry name",
+          description: "Please choose a from the list!",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else if (
+        e.keyCode === 13 &&
+        filteredSuggestions[activeSuggestionIndex] === undefined &&
+        e.target.value === ""
+      ) {
+        toast({
+          title: "Empty country field!",
+          description: "Please choose a country!",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+        });
       } else if (e.keyCode === 38) {
         if (activeSuggestionIndex === 0) {
           return;
@@ -77,12 +118,16 @@ const AutoComplete = () => {
         setActiveSuggestionIndex(activeSuggestionIndex + 1);
       }
     },
-    [activeSuggestionIndex, dispatch, filteredSuggestions, router]
+    [activeSuggestionIndex, dispatch, filteredSuggestions, router, toast]
   );
 
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
-      <ul className={styles.suggestions}>
+      <ul
+        className={
+          colorMode === "light" ? styles.suggestions : styles.suggestions_dark
+        }
+      >
         {filteredSuggestions.map((suggestion, index) => {
           let className;
 
@@ -92,7 +137,7 @@ const AutoComplete = () => {
 
           return (
             <li className={className} key={suggestion} onClick={onClick}>
-              {suggestion}
+              <Box>{suggestion}</Box>
             </li>
           );
         })}
@@ -113,10 +158,8 @@ const AutoComplete = () => {
         value={input}
       />
       {showSuggestions && input && <SuggestionsListComponent />}
-      <Button mt="10px" size={"lg"} onClick={dataFetchClickHandler}>
-        Load covid stats!
-      </Button>
     </>
   );
 };
-export default AutoComplete;
+
+export default AutoSuggestion;

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { covidDataSelector } from "../store/selectors/selector";
 
-import MapChart from "./Map";
+import MapChart from "./MapChart";
 import StatisticCard from "./StatisticCard";
 
 const CountryDatas = () => {

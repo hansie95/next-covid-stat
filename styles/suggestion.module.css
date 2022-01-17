@@ -20,17 +20,36 @@
   margin-top: -1.5px;
 }
 
-.suggestions::-webkit-scrollbar {
+.suggestions_dark {
+  border: 2px solid #2d3748;
+  border-top-width: 0;
+  border-radius: 0px 0px 5px 5px;
+  z-index: 1;
+  background-color: #2d3748;
+  list-style: none;
+  margin-top: 0;
+  max-height: 143px;
+  overflow-y: auto;
+  padding-left: 0;
+  width: 300px;
+  position: absolute;
+  margin-top: -1.5px;
+}
+
+.suggestions::-webkit-scrollbar,
+.suggestions_dark::-webkit-scrollbar {
   width: 0.2rem;
   height: 0rem;
   border-radius: 20px;
 }
 
-.suggestions::-webkit-scrollbar-thumb {
+.suggestions::-webkit-scrollbar-thumb,
+.suggestions_dark::-webkit-scrollbar-thumb {
   background-color: #4299e1;
 }
 
-.suggestions li {
+.suggestions li,
+.suggestions_dark li {
   padding: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
@@ -44,6 +63,7 @@
   font-weight: 700;
 }
 
-.suggestions li:not(:last-of-type) {
+.suggestions li:not(:last-of-type),
+.suggestions_dark li:not(:last-of-type) {
   border-bottom: 1px solid #999;
 }

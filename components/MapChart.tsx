@@ -16,12 +16,20 @@ import {
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
+type marker = [
+  {
+    markerOffset: number;
+    name: string;
+    coordinates: [number, number];
+  }
+];
+
 const MapChart = () => {
   const region = useSelector(regionSelector);
   const view = useSelector(viewtSelector);
   const coordinates = useSelector(countryDataSelector);
 
-  const markers = [
+  const markers: marker = [
     {
       markerOffset: -30,
       name: coordinates[0]?.display_name,
