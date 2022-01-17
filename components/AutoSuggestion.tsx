@@ -77,10 +77,23 @@ const AutoSuggestion = () => {
         setShowSuggestions(false);
         dispatch(covidStatActions.fetch());
         router.push("/" + filteredSuggestions[activeSuggestionIndex]);
-        console.log(filteredSuggestions[activeSuggestionIndex]);
+        console.log(e.target.value);
       } else if (
         e.keyCode === 13 &&
-        filteredSuggestions[activeSuggestionIndex] === undefined
+        filteredSuggestions[activeSuggestionIndex] === undefined &&
+        e.target.value !== ""
+      ) {
+        toast({
+          title: "Wrong ountry name",
+          description: "Please choose a from the list!",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else if (
+        e.keyCode === 13 &&
+        filteredSuggestions[activeSuggestionIndex] === undefined &&
+        e.target.value === ""
       ) {
         toast({
           title: "Empty country field!",
