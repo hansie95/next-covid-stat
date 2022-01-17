@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/input";
-import { Box, useToast } from "@chakra-ui/react";
+import { Box, useColorMode, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ const AutoSuggestion = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const toast = useToast();
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     countries.map((country) => {
@@ -122,7 +123,11 @@ const AutoSuggestion = () => {
 
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
-      <ul className={styles.suggestions}>
+      <ul
+        className={
+          colorMode === "light" ? styles.suggestions : styles.suggestions_dark
+        }
+      >
         {filteredSuggestions.map((suggestion, index) => {
           let className;
 
