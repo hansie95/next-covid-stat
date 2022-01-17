@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/input";
-import { Box, Button, useToast } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,23 +12,26 @@ import styles from "../styles/suggestion.module.css";
 const AutoSuggestion = () => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  const dispatch = useDispatch();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const input = useSelector(countryNameSelector);
+  const dispatch = useDispatch();
   const router = useRouter();
-  const { query } = useRouter();
   const toast = useToast();
 
   useEffect(() => {
     countries.map((country) => {
-      if (country.toLowerCase() === String(query.countries).toLowerCase()) {
-        dispatch(covidStatActions.AddCountryName(String(query.countries)));
+      if (
+        country.toLowerCase() === String(router.query.countries).toLowerCase()
+      ) {
+        dispatch(
+          covidStatActions.AddCountryName(String(router.query.countries))
+        );
         dispatch(covidStatActions.fetch());
       } else {
         dispatch(covidStatActions.AddCountryName(""));
       }
     });
-  }, [dispatch, query.countries]);
+  }, [dispatch, router.query.countries]);
 
   const onChange = useCallback(
     (e: any) => {
