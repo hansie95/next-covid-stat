@@ -1,5 +1,9 @@
 import { Input } from "@chakra-ui/input";
+<<<<<<< Updated upstream
 import { Button } from "@chakra-ui/react";
+=======
+import { Box, useColorMode, useToast } from "@chakra-ui/react";
+>>>>>>> Stashed changes
 import { useRouter } from "next/router";
 
 import React, { useCallback, useEffect, useState } from "react";
@@ -17,7 +21,12 @@ const AutoComplete = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const input = useSelector(countryNameSelector);
   const router = useRouter();
+<<<<<<< Updated upstream
   const { query } = useRouter();
+=======
+  const toast = useToast();
+  const { colorMode } = useColorMode();
+>>>>>>> Stashed changes
 
   useEffect(() => {
     dispatch(covidStatActions.AddCountryName(String(query.countries)));
@@ -82,7 +91,11 @@ const AutoComplete = () => {
 
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
-      <ul className={styles.suggestions}>
+      <ul
+        className={
+          colorMode === "light" ? styles.suggestions : styles.suggestions_dark
+        }
+      >
         {filteredSuggestions.map((suggestion, index) => {
           let className;
 
