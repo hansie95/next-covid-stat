@@ -6,7 +6,7 @@ import SpinPicture from "./SpinPicture";
 
 const Header = () => {
   return (
-    <Box textAlign="center" mb="50px" mt="20px">
+    <Box textAlign="center" mb="50px" mt="45px">
       <SpinPicture />
       <Heading mt="20px" size="xl">
         Welcome Covid Stat v1

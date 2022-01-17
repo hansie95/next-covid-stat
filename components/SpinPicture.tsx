@@ -1,24 +1,11 @@
-import {
-  Box,
-  Center,
-  Flex,
-  Grid,
-  GridItem,
-  Stack,
-  Image,
-} from "@chakra-ui/react";
-
+import { Center, Grid, GridItem, Image, useColorMode } from "@chakra-ui/react";
 import { Switch } from "@chakra-ui/switch";
+import React from "react";
 
-import React, { useState } from "react";
 import styles from "../styles/spinImage.module.css";
 
 const SpinPicture = () => {
-  const [light, setLight] = useState(true);
-
-  const onSwitchChangeHandler = () => {
-    setLight(!light);
-  };
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Grid templateColumns="repeat(5, 1fr)" gap={6}>
@@ -36,12 +23,12 @@ const SpinPicture = () => {
       <GridItem w="100%" h="10" />
       <Center>
         <Image
-          src={light ? "/sun.png" : "/moon.png"}
+          src={colorMode === "light" ? "/sun.png" : "/moon.png"}
           width="20px"
           height="20px"
           alt="sun"
         />
-        <Switch onChange={onSwitchChangeHandler} size="md" />
+        <Switch onChange={toggleColorMode} size="md" />
       </Center>
     </Grid>
   );
