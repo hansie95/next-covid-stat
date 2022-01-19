@@ -12,6 +12,7 @@ import {
   regionSelector,
   viewtSelector,
 } from "../store/selectors/selector";
+import { useColorMode } from "@chakra-ui/react";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -28,6 +29,7 @@ const MapChart = () => {
   const region = useSelector(regionSelector);
   const view = useSelector(viewtSelector);
   const coordinates = useSelector(countryDataSelector);
+  const { colorMode } = useColorMode();
 
   const markers: marker = [
     {
@@ -56,8 +58,8 @@ const MapChart = () => {
               <Geography
                 key={geo.rsmKey}
                 geography={geo}
-                fill="#EAEAEC"
-                stroke="#6998AB"
+                fill={colorMode === "light" ? "#EAEAEC" : "#334257"}
+                stroke={colorMode === "light" ? "#6998AB" : "#FE7E6D"}
               />
             ))
         }
@@ -65,9 +67,9 @@ const MapChart = () => {
       {markers.map(({ name, coordinates, markerOffset }) => (
         <Marker key={name} coordinates={coordinates}>
           <g
-            fill="none"
+            fill="#FF5533"
             stroke="#FF5533"
-            strokeWidth="3"
+            strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"
             transform="translate(-12, -24)"
@@ -78,7 +80,11 @@ const MapChart = () => {
           <text
             textAnchor="middle"
             y={markerOffset}
-            style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}
+            style={{
+              fontFamily: "system-ui",
+              fill: colorMode === "light" ? "#393E46" : "#fff",
+              fontSize: "20px",
+            }}
           >
             {name}
           </text>

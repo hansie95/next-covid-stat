@@ -42,7 +42,7 @@ const AutoSuggestion = () => {
         (suggestion) =>
           suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
       );
-      dispatch(covidStatActions.AddCountryName(e.target.value));
+      dispatch(covidStatActions.AddCountryName(userInput));
       setFilteredSuggestions(unLinked);
       setActiveSuggestionIndex(0);
       setShowSuggestions(true);
@@ -61,7 +61,6 @@ const AutoSuggestion = () => {
     setShowSuggestions(false);
     dispatch(covidStatActions.fetch());
     router.push("/" + e.target.innerText);
-    console.log(e.target.innerText);
   };
 
   const onKeyDown = useCallback(

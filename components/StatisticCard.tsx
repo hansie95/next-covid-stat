@@ -1,93 +1,140 @@
-import { Box, Center, Heading, Text, Wrap, WrapItem } from "@chakra-ui/layout";
+import { Box, Center, Heading, Text, Wrap } from "@chakra-ui/layout";
 import {
   Image,
   CircularProgress,
   CircularProgressLabel,
+  Stack,
+  useColorMode,
 } from "@chakra-ui/react";
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
+
+import { texts } from "../languageTexts";
+import { languageSelector } from "../store/selectors/languageSelector";
 
 const StatisticCard: FC<any> = ({ country }) => {
   const deaths = country.response[0].deaths.total;
   const population = country.response[0].population;
   const totalCases = country.response[0].cases.total;
   const casesRatio = parseFloat(((totalCases / population) * 100).toFixed(2));
+  const language = useSelector(languageSelector);
+  const { colorMode } = useColorMode();
 
   return (
-    <Box mx="auto" mb="40px">
-      <Box mt="40px">
+    <Box mx="auto">
+      <Box ml="10px">
         <Heading>{country.response[0].country.toUpperCase()}</Heading>
-        <Text as="i">Latest update: {country.response[0].day}</Text>
+        <Text as="i">
+          {language === "hun" ? texts.hun.date : texts.eng.date}
+          {country.response[0].day}
+        </Text>
       </Box>
 
-      <Wrap>
-        <WrapItem>
-          <Center mt="30px" w="300px" h="80px" mr="100px">
-            <Image src="/grow.png" alt="grave" w="70px" />
-            <Heading ml="10px" size="lg">
-              New deaths:{" "}
+      <Wrap align="center" my="40px" ml="10px">
+        <Center w="400px" h="80px">
+          <Image
+            src={colorMode === "light" ? "/grow.png" : "/grow_dark.png"}
+            alt="grave"
+            w="70px"
+            ml="2px"
+          />
+          <Stack w="250px" mx="auto" ml="30px">
+            <Heading size="lg">
+              {language === "hun" ? texts.hun.newDeath : texts.eng.newDeath}
+            </Heading>
+            <Heading size="lg">
               {country.response[0].deaths.new === null
                 ? 0
                 : country.response[0].deaths.new}
             </Heading>
-          </Center>
-        </WrapItem>
-
-        <WrapItem>
-          <Center mt="30px" w="250px" h="80px">
-            <Image src="/grave.png" alt="grave" w="70px" />
-            <Heading ml="10px" size="lg">
-              Deaths: {deaths === null ? 0 : deaths.toLocaleString("en-US")}
+          </Stack>
+        </Center>
+        <Center w="300px" h="80px">
+          <Image
+            src={colorMode === "light" ? "/grave.png" : "/grave_dark.png"}
+            alt="grave"
+            w="70px"
+            ml="-1px"
+          />
+          <Stack w="250px" mx="auto" ml="30px">
+            <Heading size="lg">
+              {language === "hun" ? texts.hun.death : texts.eng.death}
             </Heading>
-          </Center>
-        </WrapItem>
+            <Heading size="lg">
+              {deaths === null ? 0 : deaths.toLocaleString("en-US")}
+            </Heading>
+          </Stack>
+        </Center>
       </Wrap>
 
-      <Wrap>
-        <WrapItem>
-          <Center mt="40px" w="300px" h="80px" mr="100px">
-            <Image src="/plus.png" alt="grave" w="70px" />
-            <Heading ml="10px" size="lg">
-              New cases:{" "}
+      <Wrap my="40px" ml="10px">
+        <Center w="400px" mt="30px" h="80px">
+          <Image
+            src={colorMode === "light" ? "/plus.png" : "/plus_dark.png"}
+            alt="grave"
+            w="70px"
+            ml="2px"
+          />
+          <Stack w="250px" mx="auto" ml="30px">
+            <Heading size="lg">
+              {language === "hun" ? texts.hun.newCase : texts.eng.newCase}{" "}
+            </Heading>
+            <Heading size="lg">
               {country.response[0].cases.new === null
                 ? 0
                 : country.response[0].cases.new}
             </Heading>
-          </Center>
-        </WrapItem>
+          </Stack>
+        </Center>
 
-        <WrapItem>
-          <Center mt="40px" w="300px" h="80px">
-            <Image src="/spread.png" alt="grave" w="70px" />
-            <Heading ml="10px" size="lg">
-              Total cases: {totalCases.toLocaleString("en-US")}
+        <Center mt="40px" w="300px" h="80px">
+          <Image
+            src={colorMode === "light" ? "/spread.png" : "/spread_dark.png"}
+            alt="grave"
+            w="70px"
+            ml="1.4px"
+          />
+          <Stack w="250px" mx="auto" ml="30px">
+            <Heading size="lg">
+              {language === "hun" ? texts.hun.cases : texts.eng.cases}
             </Heading>
-          </Center>
-        </WrapItem>
+            <Heading size="lg">{totalCases.toLocaleString("en-US")}</Heading>
+          </Stack>
+        </Center>
       </Wrap>
 
-      <Wrap>
-        <WrapItem>
-          <Center mt="40px" w="300px" h="80px" mr="85px">
-            <Image src="/population.png" alt="grave" w="70px" />
-            <Heading ml="10px" size="lg">
-              Population: {population?.toLocaleString("en-US")}
+      <Wrap ml="10px">
+        <Center mt="40px" w="400px" h="80px">
+          <Image
+            src={
+              colorMode === "light" ? "/population.png" : "/population_dark.png"
+            }
+            alt="grave"
+            w="70px"
+            ml="-1.3px"
+          />
+          <Stack w="250px" mx="auto" ml="33px">
+            <Heading size="lg">
+              {language === "hun" ? texts.hun.population : texts.eng.population}
             </Heading>
-          </Center>
-        </WrapItem>
+            <Heading size="lg">{population?.toLocaleString("en-US")}</Heading>
+          </Stack>
+        </Center>
 
-        <WrapItem w="270px" mt="40px">
+        <Center w="300px" mt="30px" h="80px">
           <CircularProgress
-            mt="40px"
-            size="110px"
+            size="80px"
             value={casesRatio}
             color="green.400"
+            thickness="7px"
+            ml="-2px"
           >
             <CircularProgressLabel>{casesRatio}%</CircularProgressLabel>
           </CircularProgress>
-          <Heading mt="60px" size="20px" ml="10px">
-            Total covid event in the population
+          <Heading ml="23px" size="md">
+            {language === "hun" ? texts.hun.event : texts.eng.event}
           </Heading>
-        </WrapItem>
+        </Center>
       </Wrap>
     </Box>
   );
