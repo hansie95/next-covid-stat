@@ -80,7 +80,6 @@ const AutoSuggestion = () => {
         setShowSuggestions(false);
         dispatch(covidStatActions.fetch());
         router.push("/" + filteredSuggestions[activeSuggestionIndex]);
-        console.log(e.target.value);
       } else if (
         e.keyCode === 13 &&
         filteredSuggestions[activeSuggestionIndex] === undefined &&
