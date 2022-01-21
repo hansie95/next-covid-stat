@@ -1,6 +1,5 @@
-import { Box, Center, Heading, Text, Wrap } from "@chakra-ui/layout";
+import { Heading, Text } from "@chakra-ui/layout";
 import {
-  Image,
   CircularProgress,
   CircularProgressLabel,
   Stack,
@@ -11,6 +10,8 @@ import { useSelector } from "react-redux";
 
 import { texts } from "../languageTexts";
 import { languageSelector } from "../store/selectors/languageSelector";
+import { StyledBox, Wrap, Center } from "../styles/StatisticCard.styled";
+import { Image } from "../styles/Image.styled";
 
 const StatisticCard: FC<any> = ({ country }) => {
   const deaths = country.response[0].deaths.total;
@@ -21,16 +22,16 @@ const StatisticCard: FC<any> = ({ country }) => {
   const { colorMode } = useColorMode();
 
   return (
-    <Box mx="auto">
-      <Box ml="10px">
+    <StyledBox ml="auto" mr="auto">
+      <StyledBox ml="10px">
         <Heading>{country.response[0].country.toUpperCase()}</Heading>
         <Text as="i">
           {language === "hun" ? texts.hun.date : texts.eng.date}
           {country.response[0].day}
         </Text>
-      </Box>
+      </StyledBox>
 
-      <Wrap align="center" my="40px" ml="10px">
+      <Wrap my="40px" ml="10px">
         <Center w="400px" h="80px">
           <Image
             src={colorMode === "light" ? "/grow.png" : "/grow_dark.png"}
@@ -67,7 +68,7 @@ const StatisticCard: FC<any> = ({ country }) => {
         </Center>
       </Wrap>
 
-      <Wrap my="40px" ml="10px">
+      <Wrap ml="10px">
         <Center w="400px" mt="30px" h="80px">
           <Image
             src={colorMode === "light" ? "/plus.png" : "/plus_dark.png"}
@@ -103,7 +104,7 @@ const StatisticCard: FC<any> = ({ country }) => {
         </Center>
       </Wrap>
 
-      <Wrap ml="10px">
+      <Wrap>
         <Center mt="40px" w="400px" h="80px">
           <Image
             src={
@@ -136,7 +137,7 @@ const StatisticCard: FC<any> = ({ country }) => {
           </Heading>
         </Center>
       </Wrap>
-    </Box>
+    </StyledBox>
   );
 };
 
