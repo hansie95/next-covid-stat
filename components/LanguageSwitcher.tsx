@@ -1,10 +1,10 @@
-import { Center, GridItem } from "@chakra-ui/layout";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { languageSelector } from "../store/selectors/languageSelector";
 import { languageSelectActions } from "../store/slices/languageSlice";
+import { Center, GridItem } from "../styles/LanguageSwitcher.styled";
 
 const useLanguageSwitcher = () => {
   const languageSelect = useSelector(languageSelector);
@@ -36,7 +36,7 @@ const LanguageSwitcher = () => {
     useLanguageSwitcher();
 
   return (
-    <GridItem colStart={1} alignItems="center" my="auto">
+    <GridItem colStart={1}>
       <Center>
         <ButtonGroup size="sm" isAttached variant="outline">
           <Button
