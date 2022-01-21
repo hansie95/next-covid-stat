@@ -1,7 +1,6 @@
-import { Input } from "@chakra-ui/input";
-import { Box, useColorMode, useToast } from "@chakra-ui/react";
+import { Input, useColorMode, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { countries } from "../countries";
@@ -18,21 +17,6 @@ const AutoSuggestion = () => {
   const router = useRouter();
   const toast = useToast();
   const { colorMode } = useColorMode();
-
-  useEffect(() => {
-    countries.map((country) => {
-      if (
-        country.toLowerCase() === String(router.query.countries).toLowerCase()
-      ) {
-        dispatch(
-          covidStatActions.AddCountryName(String(router.query.countries))
-        );
-        dispatch(covidStatActions.fetch());
-      } else {
-        dispatch(covidStatActions.AddCountryName(""));
-      }
-    });
-  }, [dispatch, router.query.countries]);
 
   const onChange = useCallback(
     (e: any) => {
@@ -51,10 +35,6 @@ const AutoSuggestion = () => {
   );
 
   const onClick = (e: any) => {
-    if (e.target.innerText === undefined) {
-      dispatch(covidStatActions.AddCountryName(""));
-      router.push("/" + "");
-    }
     setFilteredSuggestions([]);
     dispatch(covidStatActions.AddCountryName(e.target.innerText));
     setActiveSuggestionIndex(0);
@@ -135,7 +115,7 @@ const AutoSuggestion = () => {
 
           return (
             <li className={className} key={suggestion} onClick={onClick}>
-              <Box>{suggestion}</Box>
+              {suggestion}
             </li>
           );
         })}

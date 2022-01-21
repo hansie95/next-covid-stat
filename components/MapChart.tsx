@@ -1,18 +1,17 @@
 import React from "react";
-import { Box } from "@chakra-ui/layout";
 import {
   ComposableMap,
   Geographies,
   Geography,
   Marker,
 } from "react-simple-maps";
+import { useColorMode } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import {
   countryDataSelector,
   regionSelector,
   viewtSelector,
 } from "../store/selectors/selector";
-import { useColorMode } from "@chakra-ui/react";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -45,7 +44,7 @@ const MapChart = () => {
   }
 
   if (coordinates.length === 0) {
-    return <Box></Box>;
+    return <></>;
   }
 
   return (

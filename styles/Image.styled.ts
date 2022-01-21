@@ -1,6 +1,8 @@
 import styled, { keyframes } from "styled-components";
 interface icon {
-  marginRight: string;
+  mr?: string;
+  ml?: string;
+  w?: string;
 }
 const rotate = keyframes`
 from {
@@ -10,6 +12,7 @@ to {
   transform: rotate(360deg);
 }
 }`;
+
 export const SpinImage = styled.img`
   animation-name: ${rotate};
   animation-duration: 11000ms;
@@ -28,5 +31,7 @@ export const Image = styled.img<icon>`
   alt: ${(props) => props.alt};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  margin-right: ${(props) => props.marginRight};
+  margin-right: ${(props) => props.mr};
+  margin-left: ${(props) => props.ml};
+  width: ${(props) => props.w};
 `;

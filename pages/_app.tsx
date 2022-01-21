@@ -4,7 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { ColorModeScript } from "@chakra-ui/react";
 
 import store from "../store/index";
-import "../styles/globals.css";
+import { GlobalStyle } from "../styles/Global";
 import theme from "../components/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Component {...pageProps} />
       </ChakraProvider>
+      <GlobalStyle />
     </Provider>
   );
 }
