@@ -34,4 +34,5 @@ export const Image = styled.img<icon>`
   margin-right: ${(props) => props.mr};
   margin-left: ${(props) => props.ml};
   width: ${(props) => props.w};
+  height: ${(props) => props.w};
 `;
