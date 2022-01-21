@@ -1,19 +1,19 @@
-import { Center, GridItem } from "@chakra-ui/react";
 import React from "react";
+import { CenterSpin, GridItem } from "../styles/SpinPicure.styled";
 
-import { SpinImage } from "../styles/image";
+import { SpinImage } from "../styles/Image.styled";
 
 const SpinPicture = () => {
   return (
     <GridItem colStart={3}>
-      <Center width="100%" mx="auto">
+      <CenterSpin>
         <SpinImage
           src="/covid.png"
           alt="covid bacterium"
           width="100px"
           height="100px"
         />
-      </Center>
+      </CenterSpin>
     </GridItem>
   );
 };
