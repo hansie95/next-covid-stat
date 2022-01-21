@@ -1,8 +1,8 @@
-import { Center, GridItem } from "@chakra-ui/layout";
 import { Switch, useColorMode } from "@chakra-ui/react";
 import React from "react";
 
-import { Image } from "../styles/image";
+import { Center, GridItem } from "../styles/ThemeSwitcher.styled";
+import { Image } from "../styles/Image.styled";
 
 const ThemeSwitcher = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -10,12 +10,12 @@ const ThemeSwitcher = () => {
   const dark = "/moon.png";
 
   return (
-    <GridItem colStart={5} alignItems="center" my="auto">
+    <GridItem colStart={5}>
       <Center>
         <Image
           src={colorMode === "light" ? light : dark}
           width="20px"
-          marginRight="10px"
+          mr="10px"
           height="20px"
           alt="sun"
         />
