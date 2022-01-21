@@ -4,7 +4,7 @@ interface Box {
   m?: string;
 }
 
-export const StyledBox = styled.div<Box>`
-  weight: ${(props) => props.w};
+export const Box = styled.div<Box>`
   margin: ${(props) => props.m};
+  width: ${(props) => props.w};
 `;
